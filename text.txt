@@ -1,0 +1,26 @@
+ const valid = {
+        name: { type: "string" },
+         email: { type: "email" },
+        password: { type: 'string', Pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" },
+        passwordconfirm: { type: 'string', Pattern: "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" },
+        };
+        const v = new validator();
+        const check = v.validate(newUser, valid);
+        // res.send(check);
+        
+        const checkUser =  user.findOne({ name: req.body.name });
+        const checkEmail =  user.findOne({ email: req.body.email });
+        
+        const buf1 = Buffer.from(req.body.password);
+        const buf2 = Buffer.from(req.body.passwordconfirm);
+        const pv = Buffer.compare(buf1, buf2)
+        
+        if (checkUser && checkEmail) { res.send("Username and Email already exist") }
+        else if (checkUser) { res.send("username already exist") }
+        else if (checkEmail) { res.send("Email already exist") }
+        else if (pv != 0) { res.send("Password must be match") }
+        else { newUser.save(); }
+        ;
+        // res.send(data)
+        console.log(newUser);
+        
